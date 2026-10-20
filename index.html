@@ -218,7 +218,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
           <li>PyTorch forward hooks that ablate vision tokens, including Qwen3-VL's DeepStack</li>
           <li>Next-token log-probs and regression to separate text and image effects</li>
           <li>Diffusion fine-tuning with LoRA and DreamBooth, and FLUX.2 image editing</li>
-          <li>Two peer-reviewed papers: Scientific Reports and CVIP 2023</li>
+          <li>Three peer-reviewed publications, including Scientific Reports and a Springer book chapter</li>
         </ul>
       </div>
     </div>
@@ -291,6 +291,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <p class="what">Hyperspectral images have hundreds of colour bands per pixel, and most are redundant. This method uses Biogeography-Based Optimization to keep only the useful bands, then classifies each pixel with an SVM. Funded by the Indian Space Research Organisation.</p>
         <ul class="tick">
           <li>Beat Genetic Algorithm and Differential Evolution baselines on accuracy at every band count tested, from 5 to 40 bands.</li>
+          <li>Extended the work to deep learning in a Springer book chapter: tested 2D, 3D, multi-dimensional and diverse-region CNNs on the selected bands across three datasets. Band selection cut the 3D CNN's trainable parameters by 86% and its training time by 69% on Indian Pines.</li>
         </ul>
         <div class="metrics">
           <div class="metric"><span>bands kept </span><b>40 of 200</b></div>
@@ -299,8 +300,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
           <div class="metric"><span>avg. F1 </span><b>0.94</b><span> (GA 0.90)</span></div>
           <div class="metric"><span>vs. GA / DE </span><b>93.07% / 95.02%</b></div>
         </div>
-        <p class="stack">method: <code>evolutionary band selection · SVM (RBF kernel)</code> · published at CVIP 2023 (Springer)</p>
-        <div class="links"><a href="https://doi.org/10.1007/978-3-031-58174-8_9">paper ↗</a></div>
+        <p class="stack">method: <code>evolutionary band selection · SVM (RBF kernel) · CNNs</code> · published at CVIP 2023 and in a Springer book (2025)</p>
+        <div class="links"><a href="https://doi.org/10.1007/978-3-031-58174-8_9">CVIP paper ↗</a><a href="https://doi.org/10.1007/978-3-031-83123-2_7">book chapter ↗</a></div>
       </div>
     </article>
   </section>
@@ -338,7 +339,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <ul class="tick">
           <li>Built a pipeline that uses Biogeography-Based Optimization to keep only the most informative spectral bands.</li>
           <li>Reached 96.68% accuracy on Indian Pines (κ 0.95, average F1 0.94), ahead of Genetic Algorithm (93.07%) and Differential Evolution (95.02%).</li>
-          <li>Published at CVIP 2023 (Springer).</li>
+          <li>Published at CVIP 2023 (Springer), then extended with CNN classifiers in a Springer book chapter (2025).</li>
         </ul>
       </div>
     </div>
@@ -368,6 +369,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </div>
     </div>
     <div class="row">
+      <div class="meta">2025<br><span class="tag">book chapter</span></div>
+      <div>
+        <h3><a href="https://doi.org/10.1007/978-3-031-83123-2_7">Optimizing Hyperspectral Image Classification: Biogeography-Based Band Selection and CNN Analysis ↗</a></h3>
+        <p>A. Datta, <b style="font-weight:500;color:var(--ink)">G. Niranjan</b>, S. Ghosh, A. Ghosh. In <i>Computational Intelligence based Hyperspectral Image Processing</i>, Intelligent Systems Reference Library vol. 268, Springer.</p>
+        <p>Extends the CVIP paper below with deep learning. Four CNN architectures are tested on the selected bands across Indian Pines, KSC and Botswana. Band selection sharply reduces model size, for example 86% fewer trainable parameters for a 3D CNN.</p>
+      </div>
+    </div>
+    <div class="row">
       <div class="meta">2024<br><span class="tag">conference</span></div>
       <div>
         <h3><a href="https://doi.org/10.1007/978-3-031-58174-8_9">Biogeography Based Band Selection for Hyperspectral Image Classification ↗</a></h3>
@@ -382,9 +391,9 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <section id="skills">
     <h2><span>## </span>skills</h2>
     <dl class="skills">
-      <dt>llms &amp; retrieval</dt><dd>LangGraph, LangChain, Gemini API, OpenAI API, vLLM, RAG, Chroma, Pinecone, semantic search, hybrid retrieval, embeddings, prompt design, evals, LLM-as-judge</dd>
-      <dt>machine learning</dt><dd>PyTorch, Hugging Face, scikit-learn, diffusion fine-tuning (LoRA, DreamBooth), Weights &amp; Biases, NumPy, Pandas</dd>
-      <dt>engineering</dt><dd>Python, SQL, C++, Java, Bash, pytest, CI, Git, Docker, Linux, Slurm / HPC, AWS, Google Cloud, Streamlit</dd>
+      <dt>llms &amp; retrieval</dt><dd>Generative AI, Large Language Models (LLMs), NLP, LangGraph, LangChain, Gemini API, OpenAI API, vLLM, RAG, Chroma, Pinecone, semantic search, hybrid retrieval, embeddings, prompt design, evals, LLM-as-judge</dd>
+      <dt>machine learning</dt><dd>Computer Vision, Vision-Language Models (VLMs), CNNs, PyTorch, Hugging Face Transformers, scikit-learn, LoRA / DreamBooth fine-tuning, interpretability (hooks, ablation), Weights &amp; Biases, NumPy, Pandas</dd>
+      <dt>engineering</dt><dd>Python, SQL, C++, Java, Bash, pytest, GitHub Actions, Git, Docker, Linux, Slurm / HPC, AWS, Google Cloud, Streamlit</dd>
       <dt>languages</dt><dd>English (C1), German (B1, working toward B2), Hindi (native)</dd>
     </dl>
   </section>
@@ -430,7 +439,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <footer>
   <div class="wrap">
     <span>© 2026 Gaurav Niranjan</span>
-    <span>hand-written html · no frameworks</span>
   </div>
 </footer>
 
