@@ -235,16 +235,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <ul class="tick">
           <li>Traced wrong answers to a root cause: amendment footnotes that quote repealed law. Wrote a PDF cleaner that strips them and their in-text markers across 553 printouts.</li>
           <li>Built an eval harness with versioned run configs and used it for every design choice: dense vs. BM25 vs. hybrid search (RRF), section-title chunk prefixes, neighbour chunks and LLM query expansion.</li>
-          <li>Checked for overfitting with 10 held-out questions written after the prompts were frozen: right section first on 8, in the top 5 on all 10.</li>
+          <li>Added a local cross-encoder reranker (ms-marco-MiniLM, 80 MB) that reorders the pooled results of the question and its rewrites. It was the biggest single gain: right section first went from 18 to 23 of 23 questions. A 96-run grid picked the app's setup, and the small reranker beat the 1 GB one.</li>
+          <li>Checked for overfitting with 10 held-out questions written after the prompts were frozen: right section first on 9 with the reranker, in the top 5 on all 10.</li>
           <li>Tests run in CI with a fake LLM and fake embeddings, so they need no API keys or model downloads.</li>
         </ul>
         <div class="metrics">
-          <div class="metric"><span>right section first </span><b>13 → 18 / 22</b></div>
-          <div class="metric"><span>MRR </span><b>0.69 → 0.88</b></div>
-          <div class="metric"><span>held-out MRR </span><b>0.88</b></div>
+          <div class="metric"><span>right section first </span><b>13/22 → 23/23</b></div>
+          <div class="metric"><span>MRR </span><b>0.69 → 1.00</b></div>
+          <div class="metric"><span>held-out MRR </span><b>0.93</b></div>
           <div class="metric"><span>faithful answers </span><b>17 / 18</b></div>
         </div>
-        <p class="stack">stack: <code>LangGraph · Gemini API · Chroma · BGE embeddings · BM25 · Streamlit · pytest · GitHub Actions</code></p>
+        <p class="stack">stack: <code>LangGraph · Gemini API · Chroma · BGE embeddings · BM25 · cross-encoder reranker · Streamlit · pytest · GitHub Actions</code></p>
         <div class="links"><a href="https://income-tax-agent-wd2i88cfs4nwgtvcglq7cf.streamlit.app/">try the live demo ↗</a><a href="https://github.com/gaurav-niranjan/Income-Tax-Agent">code ↗</a></div>
       </div>
     </article>
@@ -404,7 +405,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <div class="meta">2023 – 2026</div>
       <div>
         <h3>M.Sc. Machine Learning <span class="org">· University of Tübingen</span></h3>
-        <p>Final grade 1.8 on the German scale (1.0 is best). Thesis: gender bias in vision-language models.</p>
+        <p>Final grade 1.6 on the German scale (1.0 is best). Thesis: gender bias in vision-language models.</p>
         <ul class="courses" aria-label="M.Sc. courses">
           <li>Deep Learning <b>1.7</b></li><li>Computer Vision <b>1.7</b></li><li>Video Analytics <b>1.0</b></li><li>Medical Data Science <b>1.0</b></li><li>Data Literacy <b>1.7</b></li><li>Natural Language Processing</li><li>Reinforcement Learning</li><li>Recurrent and Generative Neural Networks</li><li>Probabilistic ML</li><li>Statistical ML</li><li>Mathematics for ML</li>
         </ul>
