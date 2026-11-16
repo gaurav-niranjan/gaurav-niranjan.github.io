@@ -137,11 +137,25 @@ ul.tick li::before{content:"›";position:absolute;left:2px;color:var(--ink-3);f
 .skills dt{font-family:var(--mono);font-size:13px;color:var(--ink-3);padding-top:2px}
 .skills dd{margin:0;color:var(--ink-2)}
 
-/* ask my AI clone */
-.ask p{max-width:62ch;color:var(--ink-2);margin:0 0 18px}
-.chat-frame{display:block;width:100%;height:640px;border:1px solid var(--line);border-radius:6px;background:var(--bg-2)}
-@media (max-width:720px){.chat-frame{height:560px}}
-.ask .note{font-family:var(--mono);font-size:12.5px;color:var(--ink-3);margin:10px 0 0}
+/* AI clone chat: floating button + pop-up panel */
+.chat-launcher{position:fixed;right:24px;bottom:24px;z-index:20;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--bg);background:var(--ink);border:0;border-radius:999px;padding:10px 16px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.chat-launcher:hover{opacity:.88}
+.chat-launcher::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+
+.chat-panel{position:fixed;right:24px;bottom:80px;z-index:30;width:400px;height:min(640px,calc(100vh - 110px));display:flex;flex-direction:column;background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.22)}
+.chat-panel[hidden]{display:none}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--bg-2);font-family:var(--mono);font-size:13px}
+.chat-close{font-family:var(--mono);font-size:18px;line-height:1;color:var(--ink-2);background:none;border:0;cursor:pointer;padding:2px 6px}
+.chat-close:hover{color:var(--ink)}
+.chat-intro{margin:0;padding:10px 14px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.chat-frame{flex:1;width:100%;border:0;background:var(--bg-2)}
+.chat-note{margin:0;padding:8px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+
+/* on phones the panel fills the whole screen */
+@media (max-width:600px){
+  .chat-launcher{right:16px;bottom:16px}
+  .chat-panel{inset:0;width:auto;height:auto;border:0;border-radius:0}
+}
 
 /* contact */
 .contact p{max-width:58ch;color:var(--ink-2);margin:0 0 22px}
@@ -150,7 +164,7 @@ footer{border-top:1px solid var(--line);padding:24px 0 40px;font-family:var(--mo
 footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 @media print{
-  header.bar,.toggle,.cta,.cursor{display:none!important}
+  header.bar,.toggle,.cta,.cursor,.chat-launcher,.chat-panel{display:none!important}
   body{background:#fff;color:#000}
   section{break-inside:avoid}
 }
@@ -165,7 +179,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <div class="wrap">
     <a class="path" href="#top" style="background-image:none">~/<b>gaurav-niranjan</b></a>
     <nav>
-      <a href="#ask">ask</a>
+      <a href="#chat" data-open-chat>ask</a>
       <a href="#work">work</a>
       <a class="hide-sm" href="#experience">experience</a>
       <a class="hide-sm" href="#papers">papers</a>
@@ -188,7 +202,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </ul>
       <div class="cta">
         <a class="btn primary" href="#work">See my work</a>
-        <a class="btn" href="#ask">Ask my AI clone</a>
+        <a class="btn" href="#chat" data-open-chat>Ask my AI clone</a>
         <a class="btn" href="resume.pdf">Resume (PDF)</a>
         <a class="btn" href="mailto:niranjangaurav8@gmail.com">Email me</a>
       </div>
@@ -231,19 +245,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         </ul>
       </div>
     </div>
-  </section>
-
-  <section id="ask" class="ask">
-    <h2><span>## </span>ask my AI clone</h2>
-    <p>I built an AI version of myself. It answers questions about my career, projects and skills. Ask it anything you'd ask me in a first call.</p>
-    <iframe
-      class="chat-frame"
-      src="https://digital-twin-7lzx.onrender.com/"
-      title="Chat with Gaurav's AI clone"
-      loading="lazy"
-      allow="clipboard-write">
-    </iframe>
-    <p class="note">The app may take up to a minute to wake up on first load. Not loading? <a href="https://digital-twin-7lzx.onrender.com/" target="_blank" rel="noopener">Open it in a new tab ↗</a></p>
   </section>
 
   <section id="work">
@@ -465,6 +466,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   </div>
 </footer>
 
+<!-- AI clone chat. The panel stays hidden until the visitor opens it. -->
+<button class="chat-launcher" id="chat-launcher" aria-controls="chat" aria-expanded="false">ask my AI clone</button>
+
+<div class="chat-panel" id="chat" role="dialog" aria-label="Chat with Gaurav's AI clone" hidden>
+  <div class="chat-head">
+    <span>ai-clone.chat</span>
+    <button class="chat-close" id="chat-close" aria-label="Close chat">×</button>
+  </div>
+  <p class="chat-intro">Ask me about my experience, skills and projects.</p>
+  <!-- The address is in data-src. The script copies it to src on first open, so the app only loads when needed. -->
+  <iframe class="chat-frame" id="chat-frame" data-src="https://digital-twin-7lzx.onrender.com/" title="Chat with Gaurav's AI clone" allow="clipboard-write"></iframe>
+  <p class="chat-note">May take up to a minute to wake up. Stuck? <a href="https://digital-twin-7lzx.onrender.com/" target="_blank" rel="noopener">Open in a new tab ↗</a></p>
+</div>
+
 <script>
 (function(){
   var root=document.documentElement, btn=document.getElementById('toggle');
@@ -480,6 +495,55 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     root.setAttribute('data-theme',next);
     try{localStorage.setItem('theme',next);}catch(e){}
     label();
+  });
+})();
+
+// AI clone chat: open and close the pop-up panel
+(function(){
+  var panel = document.getElementById('chat');
+  var frame = document.getElementById('chat-frame');
+  var launcher = document.getElementById('chat-launcher');
+  var closeBtn = document.getElementById('chat-close');
+
+  function openChat(){
+    // Load the app the first time only
+    if (!frame.getAttribute('src')) {
+      frame.setAttribute('src', frame.dataset.src);
+    }
+    panel.hidden = false;
+    launcher.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeChat(){
+    panel.hidden = true;
+    launcher.setAttribute('aria-expanded', 'false');
+  }
+
+  // The floating button opens or closes the panel
+  launcher.addEventListener('click', function(){
+    if (panel.hidden) {
+      openChat();
+    } else {
+      closeChat();
+    }
+  });
+
+  // The × button closes it
+  closeBtn.addEventListener('click', closeChat);
+
+  // The Escape key closes it
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !panel.hidden) {
+      closeChat();
+    }
+  });
+
+  // The "ask" menu link and the hero button open it
+  document.querySelectorAll('[data-open-chat]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      e.preventDefault();
+      openChat();
+    });
   });
 })();
 </script>
